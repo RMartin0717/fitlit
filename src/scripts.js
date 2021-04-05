@@ -16,6 +16,7 @@ function displayUser() {
   welcomeUser();
   displayInfoCard();
   compareStepGoal();
+  displaySleepData();
 }
 
 function welcomeUser() {
@@ -48,3 +49,21 @@ function compareStepGoal() {
 // function displayAvgWater() {
 //
 // }
+
+function displaySleepData() {
+  mostRecentSleepDay();
+  mostRecentSleepWeek();
+  avgSleepData();
+}
+
+function mostRecentSleepDay() {
+
+}
+
+function mostRecentSleepWeek() {
+
+}
+
+function avgSleepData() {
+  
+}

@@ -161,7 +161,7 @@ describe("AllUserSleep", () => {
     expect(avgSleep).to.equal(3.0625000000000004)
   });
   it("Should find all users who average a sleep quality greater than 3 for any given week", () => {
-    const highSleepQuality = allUserSleep.calcAboveAvgSleepQuality("2019/06/30");
+    const highSleepQuality = allUserSleep.calcAboveAvgSleepQuality("2019/07/06");
     expect(highSleepQuality).to.deep.equal([2]);
   });
   it("Should find the users (1 or more if they tied) who slept the most number of hours for a given day (identified by the date)", () => {
