@@ -97,8 +97,8 @@ describe("Hydration class", () => {
   })
 
   it("should return oz drank on a specific date", () => {
-    expect(hydration1.ozDrankOnDate("2019/06/15")).to.equal(37);
-    expect(hydration2.ozDrankOnDate("2019/06/16")).to.equal(84);
+    expect(hydration1.ozDrankOnDate("2019/06/15", "numOunces")).to.equal(37);
+    expect(hydration2.ozDrankOnDate("2019/06/16", "numOunces")).to.equal(84);
   })
 
   it("should return how many fluid oz were drank each day over a 1 week period", () => {

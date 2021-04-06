@@ -1,14 +1,9 @@
 if (typeof module !== 'undefined') {
-  // const dayjs = require("dayjs");
-  // const isSameOrBefore = require('dayjs/plugin/isSameOrBefore');
-  // const isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
-  // dayjs.extend(isSameOrBefore);
-  // dayjs.extend(isSameOrAfter);
-
-  const calcAverage = require("calcAverage");
-  const formatDataByDate = require("formatDataByDate");
-  const retrieveAllUserDataByWeek = require("retrieveDataByWeek");
-  const retrieveMostRecentDay = require("retrieveMostRecentDay");
+  const dayjs = require("dayjs");
+  const duration = require('dayjs/plugin/duration')
+  dayjs.extend(duration);
+  const isBetween = require('dayjs/plugin/isBetween')
+  dayjs.extend(isBetween);
 }
 
 
@@ -18,13 +13,27 @@ class AllUserSleep {
   }
 
   mostRecentDayData() {
-    const todayDate = retrieveMostRecentDay(this.sleepData);
-    return todayDate
+    return this.sleepData[this.sleepData.length - 1];
   }
 
-  calcAvgSleepQuality(data, property) {
-    const avg = calcAverage(data, property)
-    return avg
+  calcAvgSleep(data, property) {
+    const totalSleep = data.reduce((total, dataPoint) => {
+      return total + dataPoint[property]
+    }, 0)
+    const avgSleep = totalSleep / data.length
+    return avgSleep
+  }
+
+  retrieveAllUserDataByWeek(date) {
+    const day7 = dayjs(new Date(date));
+    const day1 = dayjs(day7).subtract(dayjs.duration({"weeks" : 1}))
+    const dataForDates = this.sleepData.reduce((total, dataPoint) => {
+      if (dayjs(dataPoint.date).isBetween(day1, day7, null, "[]")) {
+        return [...total, dataPoint]
+      }
+      return total
+    }, [])
+    return dataForDates
   }
 
   retrieveUniqueUserIDs(weekData) {
@@ -39,13 +48,12 @@ class AllUserSleep {
   }
 
   calcAboveAvgSleepQuality(date) {
-    const dataForWeek = retrieveAllUserDataByWeek(this.sleepData, date);
+    const dataForWeek = this.retrieveAllUserDataByWeek(date);
     const userIDs = this.retrieveUniqueUserIDs(dataForWeek);
 
     const aboveAvgSleepers = userIDs.reduce((highSleepQualityUsers, currentUser) => {
       const specificSleeperData = dataForWeek.filter(dataPoint => dataPoint.userID === currentUser)
-      const avgSleepQuality = this.calcAvgSleepQuality(specificSleeperData, "sleepQuality")
-
+      const avgSleepQuality = this.calcAvgSleep(specificSleeperData, "sleepQuality")
       if (avgSleepQuality > 3) {
         return [...highSleepQualityUsers, currentUser]
       }

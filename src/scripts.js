@@ -48,8 +48,8 @@ function compareStepGoal() {
 
 function displayHydrationData(data) {
   const todayDate = newUserHydration.mostRecentDayData();
-  console.log("most recent day", todayDate);
-  const todayHydration = newUserHydration.ozDrankOnDate(todayDate);
+  console.log("most recent day", todayDate.date);
+  const todayHydration = newUserHydration.ozDrankOnDate(todayDate.date);
   console.log("today's hydration date", todayHyrdation);
   //display data for the returned date
   const weekHydration = newUserHydration.dailyDrinkDuringWeek(todayDate, "numOunces");

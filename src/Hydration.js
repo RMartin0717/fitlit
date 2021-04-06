@@ -1,10 +1,10 @@
 if (typeof module !== 'undefined') {
-  // const calcAverage = require("calcAverage");
-  // const formatDataByDate = require("formatDataByDate");
-  // const retrieveAllUserDataByWeek = require("retrieveDataByWeek");
-  // const retrieveMostRecentDay = require("retrieveMostRecentDay");
+  const dayjs = require("dayjs");
+  const duration = require('dayjs/plugin/duration')
+  dayjs.extend(duration);
+  const isBetween = require('dayjs/plugin/isBetween')
+  dayjs.extend(isBetween);
 }
-
 
 class Hydration {
   constructor(id, data) {
@@ -13,24 +13,50 @@ class Hydration {
   }
 
   mostRecentDayData() {
-    const todayDate = retrieveMostRecentDay(this.hydrationData);
-    return todayDate
+    return this.hydrationData[this.hydrationData.length - 1];
   }
 
   calcAvgDailyWater(property) {
-    const avg = calcAverage(this.hydrationData, property)
+    const total = this.hydrationData.reduce((total, dataPoint) => {
+      return total + dataPoint.numOunces
+    }, 0)
+    const avg = total / this.hydrationData.length
     return avg
   }
 
-  ozDrankOnDate(date) {
+  ozDrankOnDate(date, property) {
     const drinkDate = this.hydrationData.find(dataPoint => dataPoint.date === date);
-    const ozDrankOnDate = drinkDate.numOunces;
+    console.log(drinkDate)
+    const ozDrankOnDate = drinkDate[property];
     return ozDrankOnDate;
   }
 
+  retrieveUserDataByWeek(date) {
+    const day7 = dayjs(new Date(date));
+    const day1 = dayjs(day7).subtract(dayjs.duration({"weeks" : 1}))
+    const dataForDates = this.hydrationData.reduce((total, dataPoint) => {
+      if (dayjs(dataPoint.date).isBetween(day1, day7, null, "[]")) {
+        return [...total, dataPoint]
+      }
+      return total
+    }, [])
+    return dataForDates
+  }
+
+  formatDataByDate(data, property) {
+    const specificWeekData = data.map(dataPoint => {
+        const day = dataPoint.date;
+        const data = dataPoint[property];
+        const newData = {[day]: data};
+        return newData
+    });
+    return specificWeekData
+  }
+
+
   dailyDrinkDuringWeek(date, property) {
-    const hydrationData = retrieveAllUserDataByWeek(this.hydrationData, date);
-    const formattedData = formatDataByDate(hydrationData, property);
+    const hydrationData = this.retrieveUserDataByWeek(this.hydrationData, date);
+    const formattedData = this.formatDataByDate(hydrationData, property);
     return formattedData
   }
 }
