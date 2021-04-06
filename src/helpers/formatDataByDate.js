@@ -8,4 +8,7 @@ const formatDataByDate = (data, property) => {
   return specificWeekData
 }
 
-module.exports = formatDataByDate;
+
+if (typeof module !== 'undefined') {
+  module.exports = formatDataByDate;
+}

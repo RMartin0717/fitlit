@@ -1,9 +1,25 @@
-var calcAverage = require("./helpers/calcAverage");
-var retrieveAllUserDataByWeek = require("./helpers/retrieveDataByWeek");
+if (typeof module !== 'undefined') {
+  // const dayjs = require("dayjs");
+  // const isSameOrBefore = require('dayjs/plugin/isSameOrBefore');
+  // const isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
+  // dayjs.extend(isSameOrBefore);
+  // dayjs.extend(isSameOrAfter);
+
+  const calcAverage = require("./helpers/calcAverage");
+  const formatDataByDate = require("./helpers/formatDataByDate");
+  const retrieveAllUserDataByWeek = require("./helpers/retrieveDataByWeek");
+  const retrieveMostRecentDay = require("./helpers/retrieveMostRecentDay");
+}
+
 
 class AllUserSleep {
   constructor(sleepData) {
     this.sleepData = sleepData;
+  }
+
+  mostRecentDayData() {
+    const todayDate = retrieveMostRecentDay(this.sleepData);
+    return todayDate
   }
 
   calcAvgSleepQuality(data, property) {
