@@ -1,14 +1,8 @@
 if (typeof module !== 'undefined') {
-  // const dayjs = require("dayjs");
-  // const isSameOrBefore = require('dayjs/plugin/isSameOrBefore');
-  // const isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
-  // dayjs.extend(isSameOrBefore);
-  // dayjs.extend(isSameOrAfter);
-
-  const calcAverage = require("./helpers/calcAverage");
-  const formatDataByDate = require("./helpers/formatDataByDate");
-  const retrieveAllUserDataByWeek = require("./helpers/retrieveDataByWeek");
-  const retrieveMostRecentDay = require("./helpers/retrieveMostRecentDay");
+  // const calcAverage = require("calcAverage");
+  // const formatDataByDate = require("formatDataByDate");
+  // const retrieveAllUserDataByWeek = require("retrieveDataByWeek");
+  // const retrieveMostRecentDay = require("retrieveMostRecentDay");
 }
 
 

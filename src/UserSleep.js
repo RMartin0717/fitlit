@@ -5,12 +5,11 @@ if (typeof module !== 'undefined') {
   // dayjs.extend(isSameOrBefore);
   // dayjs.extend(isSameOrAfter);
 
-  const calcAverage = require("./helpers/calcAverage");
-  const formatDataByDate = require("./helpers/formatDataByDate");
-  const retrieveAllUserDataByWeek = require("./helpers/retrieveDataByWeek");
-  const retrieveMostRecentDay = require("./helpers/retrieveMostRecentDay");
+  const calcAverage = require("calcAverage");
+  const formatDataByDate = require("formatDataByDate");
+  const retrieveAllUserDataByWeek = require("retrieveDataByWeek");
+  const retrieveMostRecentDay = require("retrieveMostRecentDay");
 }
-
 
 
 class UserSleep {
